@@ -1,18 +1,22 @@
 document.addEventListener('DOMContentLoaded', function () {
-	runOnDOMWithCallback(functionGetEnvironment, functionSetEnvironment);
+	chrome.tabs.getSelected(null,function(tab) {
+		if (tab.url.indexOf('alaskaair.com') === -1)
+			return;
+		
+		runOnDOMWithCallback(functionGetEnvironment, functionSetEnvironment);
 
-	document.getElementById('managetrip').addEventListener('click', function () { runOnDOM(functionManageTrip); window.close(); }, false);
-	document.getElementById('selectfirstflight').addEventListener('click', function () { runOnDOM(functionSelectFirstFlight) }, false);
-	document.getElementById('loadsingle').addEventListener('click', function () { runOnDOM(functionLoadPax) }, false);
-	document.getElementById('loadmultiple').addEventListener('click', function () { runOnDOM(functionLoadMultiPax) }, false);
-	document.getElementById('loadpayment').addEventListener('click', function () { runOnDOM(functionLoadPayment) }, false);
-	document.getElementById('loadarranger').addEventListener('click', function () { runOnDOM(functionLoadArranger) }, false);
-	
-	//MOW
-	document.getElementById('mowloadpax').addEventListener('click', function () { runOnDOM(functionMowLoadPax) }, false);
-	document.getElementById('mowloadcontactinfo').addEventListener('click', function () { runOnDOM(functionMowLoadContactInfo) }, false);
-	document.getElementById('mowloadpayment').addEventListener('click', function () { runOnDOM(functionMowLoadPayment) }, false);
-
+		document.getElementById('managetrip').addEventListener('click', function () { runOnDOM(functionManageTrip); window.close(); }, false);
+		document.getElementById('selectfirstflight').addEventListener('click', function () { runOnDOM(functionSelectFirstFlight) }, false);
+		document.getElementById('loadsingle').addEventListener('click', function () { runOnDOM(functionLoadPax) }, false);
+		document.getElementById('loadmultiple').addEventListener('click', function () { runOnDOM(functionLoadMultiPax) }, false);
+		document.getElementById('loadpayment').addEventListener('click', function () { runOnDOM(functionLoadPayment) }, false);
+		document.getElementById('loadarranger').addEventListener('click', function () { runOnDOM(functionLoadArranger) }, false);
+		
+		//MOW
+		document.getElementById('mowloadpax').addEventListener('click', function () { runOnDOM(functionMowLoadPax) }, false);
+		document.getElementById('mowloadcontactinfo').addEventListener('click', function () { runOnDOM(functionMowLoadContactInfo) }, false);
+		document.getElementById('mowloadpayment').addEventListener('click', function () { runOnDOM(functionMowLoadPayment) }, false);
+	});
 }, false);
 
 var runOnDOM = function (functionToExecute) {
@@ -30,7 +34,10 @@ var runOnDOMWithCallback = function (functionToExecute, callback) {
 
 // Env
 var functionGetEnvironment = function () {
-	return document.getElementsByClassName("server-name fine-print text-center footer-servername")[1].textContent;
+	if ($('.footer-servername').length === 0)
+		return '';
+	
+	return $('.footer-servername').text();
 }
 var functionSetEnvironment = function (result) {
 	document.getElementById('env').innerHTML = result;
