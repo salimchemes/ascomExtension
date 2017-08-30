@@ -10,28 +10,13 @@
   "permissions": [
     "activeTab"
   ],
-  "background": {
-    "scripts": [
-      "thirdParty/env.js",
-      "thirdParty/jquery-3.2.1.min.js",
-      "thirdParty/managetrip.js"
-    ]
-  },
-  "web_accessible_resources": [
-    "thirdParty/env.js",
-    "thirdParty/jquery-3.2.1.min.js",
-    "thirdParty/managetrip.js"
-  ],
+  "web_accessible_resources": ["logo.png"]
   "content_scripts": [
     {
       "matches": [
         "<all_urls>"
       ],
-      "js": [
-        "thirdParty/env.js",
-        "thirdParty/jquery-3.2.1.min.js",
-        "thirdParty/managetrip.js"
-      ]
+	  "css": ["css/bootstrap.min.css"]
     }
   ]
 }
