@@ -2,6 +2,10 @@
 <html lang="en">
   <head>
     <link href="css/bootstrap.min.css" rel="stylesheet">
+	
+	<script src="thirdParty/jquery-3.2.1.min.js"></script>
+	<script src="thirdParty/popper.min.js"></script>
+	<script src="thirdParty/bootstrap.min.js"></script>
 	<script src="popup.js"></script>
   </head>
   <body>
@@ -12,12 +16,23 @@
 		
 			<div id="env" style="margin-bottom:10px"></div>
 			
-			<button id="managetrip" type="button" class="btn btn-sm btn-primary btn-block">Manage Trip</button>
+			<button id="managetrip" type="button" class="btn btn-sm btn-primary btn-block">Manage trip</button>
 			<button id="selectfirstflight" type="button" class="btn btn-sm btn-primary btn-block">First refundable flight</button>
-			<button id="loadsingle" type="button" class="btn btn-sm btn-primary btn-block">Load Pax</button>
-			<button id="loadmultiple" type="button" class="btn btn-sm btn-primary btn-block">Load Multi-Pax</button>
-			<button id="loadpayment" type="button" class="btn btn-sm btn-primary btn-block">Load Payment</button>
-			<button id="loadarranger" type="button" class="btn btn-sm btn-primary btn-block">Load Arranger</button>
+			<button id="loadsingle" type="button" class="btn btn-sm btn-primary btn-block">Load pax</button>
+			<button id="loadmultiple" type="button" class="btn btn-sm btn-primary btn-block">Load multi-pax</button>
+			<button id="loadpayment" type="button" class="btn btn-sm btn-primary btn-block">Load payment</button>
+			<button id="loadarranger" type="button" class="btn btn-sm btn-primary btn-block">Load arranger</button>
+			
+			<div class="dropdown" style="margin-top:10px">
+			  <button class="btn btn-sm btn-secondary btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Mobile
+			  </button>
+			  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				<a class="dropdown-item" id="mowloadpax" href="#">Load pax</a>
+				<a class="dropdown-item" id="mowloadcontactinfo">Load contact info</a>
+				<a class="dropdown-item" id="mowloadpayment">Load payment</a>
+			  </div>
+			</div>
 		
 		</div>
 	</div>
