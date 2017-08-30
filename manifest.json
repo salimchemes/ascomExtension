@@ -10,7 +10,7 @@
   "permissions": [
     "activeTab"
   ],
-  "web_accessible_resources": ["logo.png"]
+  "web_accessible_resources": ["logo.png"],
   "content_scripts": [
     {
       "matches": [
