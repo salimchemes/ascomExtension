@@ -4,14 +4,13 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
 	
 	<script src="thirdParty/jquery-3.2.1.min.js"></script>
-	<script src="thirdParty/popper.min.js"></script>
-	<script src="thirdParty/bootstrap.min.js"></script>
+	<script src="thirdParty/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 	<script src="popup.js"></script>
   </head>
   <body>
 	<div class="container">
 		<div style="margin:10px;0">
-			<img src="logo.png" class="img-fluid" alt="Responsive image">
+			<img src="logo.png" class="img-responsive" alt="Responsive image">
 		
 			<div id="env" class="text-center" style="margin-bottom:10px"></div>
 			
@@ -22,15 +21,15 @@
 			<button id="loadpayment" type="button" class="btn btn-sm btn-primary btn-block">Load payment</button>
 			<button id="loadarranger" type="button" class="btn btn-sm btn-primary btn-block">Load arranger</button>
 			
-			<div class="dropdown" style="margin-top:10px">
-			  <button class="btn btn-sm btn-success btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				Mobile
+			<div class="btn-group" style="margin-top:5px;">
+			  <button type="button" class="btn btn-sm btn-success dropdown-toggle" style="min-width:138px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Mobile <span class="caret"></span>
 			  </button>
-			  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-				<a class="dropdown-item" id="mowloadpax" href="#">Load pax</a>
-				<a class="dropdown-item" id="mowloadcontactinfo">Load contact info</a>
-				<a class="dropdown-item" id="mowloadpayment">Load payment</a>
-			  </div>
+			  <ul class="dropdown-menu">
+				<li><a id="mowloadpax" href="#">Load pax</a></li>
+				<li><a id="mowloadcontactinfo"href="#">Load contact info</a></li>
+				<li><a id="mowloadpayment"href="#">Load payment</a></li>
+			  </ul>
 			</div>
 		</div>
 	</div>
