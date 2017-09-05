@@ -7,21 +7,28 @@
     "default_icon": "icon.png",
     "default_popup": "popup.html"
   },
+  "background": {
+    "scripts": ["background.js"]
+  },
   "permissions": [
-    "activeTab", 
-	"tabs"
+    "*://*.alaskaair.com/*",
+    "tabs"
   ],
-  "web_accessible_resources": ["logo.png"],
+  "web_accessible_resources": [
+    "logo.png"
+  ],
   "content_scripts": [
     {
       "matches": [
-        "<all_urls>"
+        "*://*.alaskaair.com/*"
       ],
-	  "js": [
-		"thirdParty/jquery-3.2.1.min.js", 
-		"thirdParty/bootstrap-3.3.7-dist/js/bootstrap.min.js"
+      "js": [
+        "thirdParty/jquery-3.2.1.min.js",
+        "thirdParty/bootstrap-3.3.7-dist/js/bootstrap.min.js"
       ],
-	  "css": ["thirdParty/bootstrap-3.3.7-dist/css/bootstrap.min.css"]
+      "css": [
+        "thirdParty/bootstrap-3.3.7-dist/css/bootstrap.min.css"
+      ]
     }
   ]
 }
