@@ -27,19 +27,27 @@ var runOnDOM = function (functionToExecute) {
 var runOnDOMWithCallback = function (functionToExecute, callback) {
 	chrome.tabs.executeScript({
 		code: '(' + functionToExecute + ')();' //argument here is a string but function.toString() returns function's code
-	}, (results) => { callback(results[0]) });
+	}, (results) => { callback(results) });
 }
 
 
 // Env
 var functionGetEnvironment = function () {
-	if ($('.footer-servername').length === 0)
+	try {
+		if ($('.footer-servername').length === 0)
+			return '';
+	
+		return $('.footer-servername').text();	
+	} catch (error) {
 		return '';
-
-	return $('.footer-servername').text();
+	}
 }
-var functionSetEnvironment = function (result) {
-	document.getElementById('env').innerHTML = result;
+var functionSetEnvironment = function (results) {
+	try {
+		document.getElementById('env').innerHTML = results[0];
+	} catch (error) {
+		document.getElementById('env').innerHTML = '';
+	}
 }
 
 
