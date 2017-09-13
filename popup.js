@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
 
 	chrome.tabs.getSelected(null, function (tab) {
-
+		showMowControls(tab.url);
 		runOnDOMWithCallback(functionGetEnvironment, functionSetEnvironment);
+
 		document.getElementById('managetrip').addEventListener('click', function () { runOnDOM(functionManageTrip); window.close(); }, false);
 		document.getElementById('selectfirstflight').addEventListener('click', function () { runOnDOM(functionSelectFirstFlight) }, false);
 		document.getElementById('loadsingle').addEventListener('click', function () { runOnDOM(functionLoadPax) }, false);
@@ -30,6 +31,25 @@ var runOnDOMWithCallback = function (functionToExecute, callback) {
 	chrome.tabs.executeScript({
 		code: '(' + functionToExecute + ')();' //argument here is a string but function.toString() returns function's code
 	}, (results) => { callback(results) });
+}
+
+var showMowControls = function(url) {
+	if (url.indexOf('mow') === -1 && 
+		url.indexOf('m.alaska') === -1 && 
+		url.indexOf('localhost') === -1)
+		return;
+
+	$('#managetrip').hide();
+	$('#selectfirstflight').hide();
+	$('#loadsingle').hide();
+	$('#loadmultiple').hide();
+	$('#loadpayment').hide();
+	$('#loadarranger').hide();
+	$('#manageGroupReservation').hide();
+
+	$('#mowloadpax').show();
+	$('#mowloadcontactinfo').show();
+	$('#mowloadpayment').show();
 }
 
 

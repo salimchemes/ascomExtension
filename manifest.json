@@ -33,7 +33,8 @@
       ],
       "js": [
         "thirdParty/jquery-3.2.1.min.js",
-        "thirdParty/bootstrap-3.3.7-dist/js/bootstrap.min.js"
+        "thirdParty/bootstrap-3.3.7-dist/js/bootstrap.min.js",
+        "popup.js"
       ],
       "css": [
         "thirdParty/bootstrap-3.3.7-dist/css/bootstrap.min.css"
