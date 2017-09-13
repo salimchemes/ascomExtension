@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', function () {
 		document.getElementById('loadmultiple').addEventListener('click', function () { runOnDOM(functionLoadMultiPax) }, false);
 		document.getElementById('loadpayment').addEventListener('click', function () { runOnDOM(functionLoadPayment) }, false);
 		document.getElementById('loadarranger').addEventListener('click', function () { runOnDOM(functionLoadArranger) }, false);
+		document.getElementById('manageGroupReservation').addEventListener('click', function () { runOnDOM(functionGroupReservation); window.close(); }, false);
+		manageGroupReservation
 
 		//MOW
 		document.getElementById('mowloadpax').addEventListener('click', function () { runOnDOM(functionMowLoadPax) }, false);
@@ -132,6 +134,12 @@ var functionLoadArranger = function () {
 	document.getElementById("ArrangerName").value = "tester";
 	document.getElementById("EmailSubscription_AgreeToEmailSubscription").checked = false;
 	window.scrollTo(0, document.body.scrollHeight);
+}
+
+
+// Open Group reservation page
+var functionGroupReservation = function() {
+	location.href = "/booking/reservation-lookup/group";
 }
 
 
