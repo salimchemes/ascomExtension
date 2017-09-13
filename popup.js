@@ -1,23 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
 
 	chrome.tabs.getSelected(null, function (tab) {
+		showDesktopControls(tab.url);
 		showMowControls(tab.url);
-		runOnDOMWithCallback(functionGetEnvironment, functionSetEnvironment);
-
-		document.getElementById('managetrip').addEventListener('click', function () { runOnDOM(functionManageTrip); window.close(); }, false);
-		document.getElementById('selectfirstflight').addEventListener('click', function () { runOnDOM(functionSelectFirstFlight) }, false);
-		document.getElementById('loadsingle').addEventListener('click', function () { runOnDOM(functionLoadPax) }, false);
-		document.getElementById('loadmultiple').addEventListener('click', function () { runOnDOM(functionLoadMultiPax) }, false);
-		document.getElementById('loadpayment').addEventListener('click', function () { runOnDOM(functionLoadPayment) }, false);
-		document.getElementById('loadarranger').addEventListener('click', function () { runOnDOM(functionLoadArranger) }, false);
-		document.getElementById('manageGroupReservation').addEventListener('click', function () { runOnDOM(functionGroupReservation); window.close(); }, false);
-		manageGroupReservation
-
-		//MOW
-		document.getElementById('mowloadpax').addEventListener('click', function () { runOnDOM(functionMowLoadPax) }, false);
-		document.getElementById('mowloadcontactinfo').addEventListener('click', function () { runOnDOM(functionMowLoadContactInfo) }, false);
-		document.getElementById('mowloadpayment').addEventListener('click', function () { runOnDOM(functionMowLoadPayment) }, false);
-
 	});
 }, false);
 
@@ -33,23 +18,56 @@ var runOnDOMWithCallback = function (functionToExecute, callback) {
 	}, (results) => { callback(results) });
 }
 
+var showDesktopControls = function(url) {
+	if (url.indexOf('www.alaska') === -1)
+		return;
+
+	$('#noActionsMessage').hide();
+
+	runOnDOMWithCallback(functionGetEnvironment, functionSetEnvironment);
+
+	$('#env').show();
+	$('#managetrip').show();
+	$('#managetrip').show();
+	$('#selectfirstflight').show();
+	$('#loadsingle').show();
+	$('#loadmultiple').show();
+	$('#loadpayment').show();
+	$('#loadarranger').show();
+	$('#manageGroupReservation').show();
+
+	addDesktopActions();
+}
+
 var showMowControls = function(url) {
 	if (url.indexOf('mow') === -1 && 
 		url.indexOf('m.alaska') === -1 && 
 		url.indexOf('localhost') === -1)
 		return;
 
-	$('#managetrip').hide();
-	$('#selectfirstflight').hide();
-	$('#loadsingle').hide();
-	$('#loadmultiple').hide();
-	$('#loadpayment').hide();
-	$('#loadarranger').hide();
-	$('#manageGroupReservation').hide();
+	$('#noActionsMessage').hide();
 
 	$('#mowloadpax').show();
 	$('#mowloadcontactinfo').show();
 	$('#mowloadpayment').show();
+
+	addMowActions();
+}
+
+var addDesktopActions = function() {
+	document.getElementById('managetrip').addEventListener('click', function () { runOnDOM(functionManageTrip); window.close(); }, false);
+	document.getElementById('selectfirstflight').addEventListener('click', function () { runOnDOM(functionSelectFirstFlight) }, false);
+	document.getElementById('loadsingle').addEventListener('click', function () { runOnDOM(functionLoadPax) }, false);
+	document.getElementById('loadmultiple').addEventListener('click', function () { runOnDOM(functionLoadMultiPax) }, false);
+	document.getElementById('loadpayment').addEventListener('click', function () { runOnDOM(functionLoadPayment) }, false);
+	document.getElementById('loadarranger').addEventListener('click', function () { runOnDOM(functionLoadArranger) }, false);
+	document.getElementById('manageGroupReservation').addEventListener('click', function () { runOnDOM(functionGroupReservation); window.close(); }, false);
+}
+
+var addMowActions = function() {
+	document.getElementById('mowloadpax').addEventListener('click', function () { runOnDOM(functionMowLoadPax) }, false);
+	document.getElementById('mowloadcontactinfo').addEventListener('click', function () { runOnDOM(functionMowLoadContactInfo) }, false);
+	document.getElementById('mowloadpayment').addEventListener('click', function () { runOnDOM(functionMowLoadPayment) }, false);
 }
 
 
