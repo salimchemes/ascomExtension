@@ -165,12 +165,16 @@ var functionMowLoadContactInfo = function () {
 
 // MOW load payment
 var functionMowLoadPayment = function () {
+	// this is to execute country dropdown "onchange" event from the extension
+	var changeEvent = document.createEvent("HTMLEvents");
+	changeEvent.initEvent("change", true, true);
+	
 	document.getElementById("CreditCard_NameOnCard").value = "Tester";
 	document.getElementById("CreditCard_Number").value = "1111";
 	document.getElementById("CreditCard_ExpirationMonth").value = 12;
 	document.getElementById("CreditCard_ExpirationYear").value = 2022;
 	document.getElementById("country").value = "US";
-	document.getElementById("country").onchange();
+	document.getElementById("country").dispatchEvent(changeEvent);
 	document.getElementById("BillingAddress_Street").value = "Address 1";
 	document.getElementById("BillingAddress_City").value = "Seattle";
 	document.getElementById("uslist").value = "WA";
