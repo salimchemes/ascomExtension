@@ -47,6 +47,7 @@ var showMowControls = function(url) {
 
 	$('#noActionsMessage').hide();
 
+	$('#mowmanagetrip').show();
 	$('#mowloadpax').show();
 	$('#mowloadcontactinfo').show();
 	$('#mowloadpayment').show();
@@ -68,6 +69,10 @@ var addMowActions = function() {
 	document.getElementById('mowloadpax').addEventListener('click', function () { runOnDOM(functionMowLoadPax) }, false);
 	document.getElementById('mowloadcontactinfo').addEventListener('click', function () { runOnDOM(functionMowLoadContactInfo) }, false);
 	document.getElementById('mowloadpayment').addEventListener('click', function () { runOnDOM(functionMowLoadPayment) }, false);
+	document.getElementById('mowmanagetrip').addEventListener('click', function () { 
+		runOnDOM(functionMowManageTrip); 
+		setTimeout(function() { runOnDOM(functionMowManageTripSetText); window.close(); }, 1000);
+	}, false);
 }
 
 
@@ -219,4 +224,14 @@ var functionMowLoadPayment = function () {
 	document.getElementById("BillingAddress_ZipCode").value = "98101";
 	document.getElementById("PaymentPhoneNumber_Number").value = "1234567890";
 	window.scrollTo(0, document.body.scrollHeight);
+}
+
+
+// MOW manage trip
+var functionMowManageTrip = function () {
+	document.getElementById('myTrips').click();
+}
+var functionMowManageTripSetText = function () {
+	document.getElementById('search-reservation-last-name').value = "tester";
+	document.getElementById('search-reservation-number').focus();
 }
