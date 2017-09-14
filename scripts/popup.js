@@ -1,14 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
-
 	chrome.tabs.getSelected(null, function (tab) {
 		showDesktopControls(tab.url);
 		showMowControls(tab.url);
 	});
+
+	document.getElementById('settings').addEventListener('click', function () { chrome.runtime.openOptionsPage() }, false);
 }, false);
 
-var runOnDOM = function (functionToExecute) { 
+var runOnDOM = function (functionToExecute, functionParamsArray) { 
 	chrome.tabs.executeScript({
-		code: '(' + functionToExecute + ')();' //argument here is a string but function.toString() returns function's code
+		code: '(' + functionToExecute + ')(' + getRunOnDOMParams(functionParamsArray) + ');' //argument here is a string but function.toString() returns function's code
 	});
 }
 
@@ -16,6 +17,33 @@ var runOnDOMWithCallback = function (functionToExecute, callback) {
 	chrome.tabs.executeScript({
 		code: '(' + functionToExecute + ')();' //argument here is a string but function.toString() returns function's code
 	}, (results) => { callback(results) });
+}
+
+var getRunOnDOMParams = function (functionParamsArray) {
+	var params = '';
+
+	console.log(functionParamsArray);
+
+	if (functionParamsArray !== null && functionParamsArray !== undefined) {
+		functionParamsArray.forEach(function(param) {
+			console.log(param);
+			if (params !== '') params += ',';
+			params += '"' + param + '"';
+		});
+
+		console.log(params);
+	}
+
+	return params;
+}
+
+var getSettingValue = function (settingKey) {
+	var value = localStorage[settingKey];
+
+	if (value == undefined)
+		return '';
+
+	return value;
 }
 
 var showDesktopControls = function(url) {
@@ -58,17 +86,29 @@ var showMowControls = function(url) {
 var addDesktopActions = function() {
 	document.getElementById('managetrip').addEventListener('click', function () { runOnDOM(functionManageTrip); window.close(); }, false);
 	document.getElementById('selectfirstflight').addEventListener('click', function () { runOnDOM(functionSelectFirstFlight) }, false);
-	document.getElementById('loadsingle').addEventListener('click', function () { runOnDOM(functionLoadPax) }, false);
-	document.getElementById('loadmultiple').addEventListener('click', function () { runOnDOM(functionLoadMultiPax) }, false);
-	document.getElementById('loadpayment').addEventListener('click', function () { runOnDOM(functionLoadPayment) }, false);
+	document.getElementById('loadsingle').addEventListener('click', function () { 
+		runOnDOM(functionLoadPax, [getSettingValue('paxFirstName'), getSettingValue('paxEmail')]); 
+	}, false);
+	document.getElementById('loadmultiple').addEventListener('click', function () { 
+		runOnDOM(functionLoadMultiPax, [getSettingValue('paxFirstName'), getSettingValue('paxEmail')]);
+	}, false);
+	document.getElementById('loadpayment').addEventListener('click', function () { 
+		runOnDOM(functionLoadPayment, [getSettingValue('creditCard')]);
+	 }, false);
 	document.getElementById('loadarranger').addEventListener('click', function () { runOnDOM(functionLoadArranger) }, false);
 	document.getElementById('manageGroupReservation').addEventListener('click', function () { runOnDOM(functionGroupReservation); window.close(); }, false);
 }
 
 var addMowActions = function() {
-	document.getElementById('mowloadpax').addEventListener('click', function () { runOnDOM(functionMowLoadPax) }, false);
-	document.getElementById('mowloadcontactinfo').addEventListener('click', function () { runOnDOM(functionMowLoadContactInfo) }, false);
-	document.getElementById('mowloadpayment').addEventListener('click', function () { runOnDOM(functionMowLoadPayment) }, false);
+	document.getElementById('mowloadpax').addEventListener('click', function () { 
+		runOnDOM(functionMowLoadPax, [getSettingValue('paxFirstName')]);
+	 }, false);
+	document.getElementById('mowloadcontactinfo').addEventListener('click', function () { 
+		runOnDOM(functionMowLoadContactInfo, [getSettingValue('paxEmail')]);
+	 }, false);
+	document.getElementById('mowloadpayment').addEventListener('click', function () { 
+		runOnDOM(functionMowLoadPayment, [getSettingValue('creditCard')]);
+	}, false);
 	document.getElementById('mowmanagetrip').addEventListener('click', function () { 
 		runOnDOM(functionMowManageTrip); 
 		setTimeout(function() { runOnDOM(functionMowManageTripSetText); window.close(); }, 1000);
@@ -113,24 +153,24 @@ var functionSelectFirstFlight = function () {
 
 
 // Load pax
-var functionLoadPax = function () {
-	document.getElementById('Traveler_0__FirstName').value = "Dev";
+var functionLoadPax = function (paxFirstName, paxEmail) {
+	document.getElementById('Traveler_0__FirstName').value = paxFirstName;
 	document.getElementById('Traveler_0__LastName').value = "Tester";
 	document.getElementById('Traveler_0__Gender').value = "Male";
 	document.getElementById('Traveler_0__BirthMonth').value = "1";
 	document.getElementById('Traveler_0__BirthDay').value = "1";
 	document.getElementById('Traveler_0__BirthYear').value = "1986";
 	document.getElementById('TravelerPhoneNbr_TravelerPhoneNumber').value = "4156452152";
-	document.getElementById('ContactEmail_EmailAddress').value = "tester@alaskaair.com";
-	document.getElementById('EmailConfirmation_EmailAddress').value = "tester@alaskaair.com";
+	document.getElementById('ContactEmail_EmailAddress').value = paxEmail;
+	document.getElementById('EmailConfirmation_EmailAddress').value = paxEmail;
 	document.getElementById("EmailSubscription_AgreeToEmailSubscription").checked = false;
 	window.scrollTo(0, document.body.scrollHeight)
 }
 
 
 // Load multi pax
-var functionLoadMultiPax = function () {
-	document.getElementById('Traveler_0__FirstName').value = "Dev";
+var functionLoadMultiPax = function (paxFirstName, paxEmail) {
+	document.getElementById('Traveler_0__FirstName').value = paxFirstName;
 	document.getElementById('Traveler_0__LastName').value = "Tester";
 	document.getElementById('Traveler_0__Gender').value = "Male";
 	document.getElementById('Traveler_0__BirthMonth').value = "1";
@@ -149,17 +189,17 @@ var functionLoadMultiPax = function () {
 	document.getElementById('Traveler_2__BirthDay').value = "3";
 	document.getElementById('Traveler_2__BirthYear').value = "1987";
 	document.getElementById('TravelerPhoneNbr_TravelerPhoneNumber').value = "4156452152";
-	document.getElementById('ContactEmail_EmailAddress').value = "tester@alaskaair.com";
-	document.getElementById('EmailConfirmation_EmailAddress').value = "tester@alaskaair.com";
+	document.getElementById('ContactEmail_EmailAddress').value = paxEmail;
+	document.getElementById('EmailConfirmation_EmailAddress').value = paxEmail;
 	document.getElementById("EmailSubscription_AgreeToEmailSubscription").checked = false;
 	window.scrollTo(0, document.body.scrollHeight)
 }
 
 
 // Load payment
-var functionLoadPayment = function () {
+var functionLoadPayment = function (cardNumber) {
 	document.getElementById("CommercialAccount").checked = true;
-	document.getElementById("CreditCardInformation_BillingCreditCardEntry_CardNumber").value = "1111";
+	document.getElementById("CreditCardInformation_BillingCreditCardEntry_CardNumber").value = cardNumber;
 	document.getElementById("CreditCardInformation_BillingCreditCardEntry_ExpirationMonths_Selected").value = 1;
 	document.getElementById("CreditCardInformation_BillingCreditCardEntry_ExpirationYears_Selected").value = 2022;
 	document.getElementById("CreditCardInformation_BillingCreditCardEntry_CardPersonName").value = "Tester";
@@ -187,8 +227,8 @@ var functionGroupReservation = function() {
 
 
 // MOW load pax
-var functionMowLoadPax = function () {
-	document.getElementById('Traveler_FirstName').value = "Dev";
+var functionMowLoadPax = function (paxFirstName) {
+	document.getElementById('Traveler_FirstName').value = paxFirstName;
 	document.getElementById('Traveler_LastName').value = "Tester";
 	document.getElementById('gender-male').click();
 	document.getElementById('Traveler_BirthMonth').value = "1";
@@ -199,21 +239,21 @@ var functionMowLoadPax = function () {
 
 
 // MOW load contact info
-var functionMowLoadContactInfo = function () {
+var functionMowLoadContactInfo = function (paxEmail) {
 	document.getElementById('traveler-contact-phone-number').value = "1234567890";
-	document.getElementById('traveler-contact-email').value = "test@test.com";
-	document.getElementById('receiptemail').value = "test@test.com";
+	document.getElementById('traveler-contact-email').value = paxEmail;
+	document.getElementById('receiptemail').value = paxEmail;
 }
 
 
 // MOW load payment
-var functionMowLoadPayment = function () {
+var functionMowLoadPayment = function (cardNumber) {
 	// this is to execute country dropdown "onchange" event from the extension
 	var changeEvent = document.createEvent("HTMLEvents");
 	changeEvent.initEvent("change", true, true);
 	
 	document.getElementById("CreditCard_NameOnCard").value = "Tester";
-	document.getElementById("CreditCard_Number").value = "1111";
+	document.getElementById("CreditCard_Number").value = cardNumber;
 	document.getElementById("CreditCard_ExpirationMonth").value = 12;
 	document.getElementById("CreditCard_ExpirationYear").value = 2022;
 	document.getElementById("country").value = "US";

@@ -3,12 +3,16 @@
   "name": "ASCOM Dev Extension",
   "description": "Chrome Extension to Alaska developers",
   "version": "1.0",
+  "options_ui": {
+    "page": "settings.html",
+    "chrome_style": true
+  },
   "browser_action": {
     "default_icon": "icon.png",
     "default_popup": "popup.html"
   },
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["scripts/background.js"]
   },
   "permissions": [
     "*://www.alaskaair.com/*",
@@ -34,7 +38,8 @@
       "js": [
         "thirdParty/jquery-3.2.1.min.js",
         "thirdParty/bootstrap-3.3.7-dist/js/bootstrap.min.js",
-        "popup.js"
+        "scripts/popup.js",
+        "scripts/settings.js"
       ],
       "css": [
         "thirdParty/bootstrap-3.3.7-dist/css/bootstrap.min.css"
