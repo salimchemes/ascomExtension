@@ -22,16 +22,11 @@ var runOnDOMWithCallback = function (functionToExecute, callback) {
 var getRunOnDOMParams = function (functionParamsArray) {
 	var params = '';
 
-	console.log(functionParamsArray);
-
 	if (functionParamsArray !== null && functionParamsArray !== undefined) {
 		functionParamsArray.forEach(function(param) {
-			console.log(param);
 			if (params !== '') params += ',';
 			params += '"' + param + '"';
 		});
-
-		console.log(params);
 	}
 
 	return params;
@@ -39,7 +34,6 @@ var getRunOnDOMParams = function (functionParamsArray) {
 
 var getSettingValue = function (settingKey) {
 	var value = localStorage[settingKey];
-
 	if (value == undefined)
 		return '';
 
@@ -76,6 +70,7 @@ var showMowControls = function(url) {
 	$('#noActionsMessage').hide();
 
 	$('#mowmanagetrip').show();
+	$('#mowsearchflight').show();
 	$('#mowloadpax').show();
 	$('#mowloadcontactinfo').show();
 	$('#mowloadpayment').show();
@@ -85,7 +80,10 @@ var showMowControls = function(url) {
 
 var addDesktopActions = function() {
 	document.getElementById('managetrip').addEventListener('click', function () { runOnDOM(functionManageTrip); window.close(); }, false);
-	document.getElementById('selectfirstflight').addEventListener('click', function () { runOnDOM(functionSelectFirstFlight) }, false);
+	document.getElementById('selectfirstflight').addEventListener('click', function () {
+		runOnDOM(functionSearchFlight, [getSettingValue('depCity'), getSettingValue('arrCity'), getSettingValue('daysToAdd')]);
+		setTimeout(function() { runOnDOM(functionSelectFirstFlight) }, 5000);
+	}, false);
 	document.getElementById('loadsingle').addEventListener('click', function () { 
 		runOnDOM(functionLoadPax, [getSettingValue('paxFirstName'), getSettingValue('paxEmail')]); 
 	}, false);
@@ -110,8 +108,12 @@ var addMowActions = function() {
 		runOnDOM(functionMowLoadPayment, [getSettingValue('creditCard')]);
 	}, false);
 	document.getElementById('mowmanagetrip').addEventListener('click', function () { 
-		runOnDOM(functionMowManageTrip); 
+		runOnDOM(functionMowManageTrip);
 		setTimeout(function() { runOnDOM(functionMowManageTripSetText); window.close(); }, 1000);
+	}, false);
+	document.getElementById('mowsearchflight').addEventListener('click', function () {
+		runOnDOM(functionMowSearchFlight, [getSettingValue('depCity'), getSettingValue('arrCity'), getSettingValue('daysToAdd')]);
+		window.close();
 	}, false);
 }
 
@@ -144,7 +146,24 @@ var functionManageTrip = function () {
 }
 
 
-// Select first flight
+// Search and select first flight
+var functionSearchFlight = function(depCity, arrCity, daysToAdd) {
+	var changeEvent = document.createEvent("HTMLEvents");
+	changeEvent.initEvent("change", true, true);
+	
+	if (daysToAdd === '') daysToAdd = '1';
+
+	var depDate = new Date(new Date().getTime() + (parseInt(daysToAdd) * 24*60*60*1000));
+	var depDateString = (depDate.getMonth() + 1) + '/'+ depDate.getDate() + '/'+ depDate.getFullYear();
+
+	document.getElementById('oneWay').checked = true;
+	document.getElementById('oneWay').dispatchEvent(changeEvent);
+	document.getElementById('fromCity1').value = depCity;
+	document.getElementById('toCity1').value = arrCity;
+	document.getElementById('departureDate1').value = depDateString;
+	document.getElementById('departureDate1').dispatchEvent(changeEvent);
+	document.getElementById('findFlights').click();
+}
 var functionSelectFirstFlight = function () {
 	$('a.refundable-toggle').click();
 	$('div.PriceCell:first').click();
@@ -223,6 +242,26 @@ var functionLoadArranger = function () {
 // Open Group reservation page
 var functionGroupReservation = function() {
 	location.href = "/booking/reservation-lookup/group";
+}
+
+
+// MOW search flight
+var functionMowSearchFlight = function(depCity, arrCity, daysToAdd) {
+	var changeEvent = document.createEvent("HTMLEvents");
+	changeEvent.initEvent("change", true, true);
+	
+	if (daysToAdd === '') daysToAdd = '1';
+
+	var depDate = new Date(new Date().getTime() + (parseInt(daysToAdd) * 24*60*60*1000));
+	var depDateString = (depDate.getMonth() + 1) + '/'+ depDate.getDate() + '/'+ depDate.getFullYear();
+
+	document.getElementById('srh-isow').checked = true;
+	document.getElementById('srh-isow').dispatchEvent(changeEvent);
+	document.getElementById('geo-from').value = depCity;
+	document.getElementById('geo-to').value = arrCity;
+	document.getElementById('departure-date').value = depDateString;
+	document.getElementById('departure-date').dispatchEvent(changeEvent);
+	document.querySelectorAll("input[type=submit]")[0].click()
 }
 
 
