@@ -39,6 +39,8 @@
         "thirdParty/jquery-3.2.1.min.js",
         "thirdParty/bootstrap-3.3.7-dist/js/bootstrap.min.js",
         "scripts/popup.js",
+        "scripts/desktop.js",
+        "scripts/mobile.js",
         "scripts/settings.js"
       ],
       "css": [
