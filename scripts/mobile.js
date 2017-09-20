@@ -1,16 +1,12 @@
 var showMowControls = function(url) {
 	if (url.indexOf('mow') === -1 && 
 		url.indexOf('m.alaska') === -1 && 
+		url.indexOf('mow-stg') === -1 && 
 		url.indexOf('localhost') === -1)
 		return;
 
 	$('#noActionsMessage').hide();
-
-	$('#mowmanagetrip').show();
-	$('#mowsearchflight').show();
-	$('#mowloadpax').show();
-	$('#mowloadcontactinfo').show();
-	$('#mowloadpayment').show();
+	$('.mowControls').show();
 
 	addMowActions();
 }

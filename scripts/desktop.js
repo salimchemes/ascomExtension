@@ -6,15 +6,7 @@ var showDesktopControls = function(url) {
 
 	runOnDOMWithCallback(functionGetEnvironment, functionSetEnvironment);
 
-	$('#env').show();
-	$('#managetrip').show();
-	$('#managetrip').show();
-	$('#selectfirstflight').show();
-	$('#loadsingle').show();
-	$('#loadmultiple').show();
-	$('#loadpayment').show();
-	$('#loadarranger').show();
-	$('#manageGroupReservation').show();
+	$('.desktopControls').show();
 
 	addDesktopActions();
 }

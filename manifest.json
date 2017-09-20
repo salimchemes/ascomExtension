@@ -20,8 +20,9 @@
     "*://mow-dev.alaskaair.com/*",
     "*://mow-test.alaskaair.com/*",
     "*://mow-qa.alaskaair.com/*",
-    "*://localhost/*",
-    "*://mow-stg-westus2.azurewebsites.net"
+    "*://mow-stg-westus2.azurewebsites.net/*",
+    "*://mow-stg-eastus2.azurewebsites.net/*",
+    "*://localhost/*"
   ],
   "web_accessible_resources": [
     "logo.png"
@@ -34,6 +35,8 @@
         "*://mow-dev.alaskaair.com/*",
         "*://mow-test.alaskaair.com/*",
         "*://mow-qa.alaskaair.com/*",
+        "*://mow-stg-westus2.azurewebsites.net/*",
+        "*://mow-stg-eastus2.azurewebsites.net/*",
         "*://localhost/*"
       ],
       "js": [
