@@ -27,14 +27,19 @@ var addMowActions = function() {
 		setTimeout(function() { runOnDOM(functionMowManageTripSetText); window.close(); }, 1000);
 	}, false);
 	document.getElementById('mowsearchflight').addEventListener('click', function () {
-		runOnDOM(functionMowSearchFlight, [getSettingValue('depCity'), getSettingValue('arrCity'), getSettingValue('daysToAdd')]);
-		window.close();
+		runOnDOM(functionMowSearchFlight);
+		setTimeout(function() { 
+			runOnDOM(functionMowSearchFlightSetText, [getSettingValue('depCity'), getSettingValue('arrCity'), getSettingValue('daysToAdd')]); 
+			window.close(); }, 1000);
 	}, false);
 }
 
 
 // MOW search flight
-var functionMowSearchFlight = function(depCity, arrCity, daysToAdd) {
+var functionMowSearchFlight = function() {
+	document.getElementById('booklink').getElementsByTagName('a')[0].click();
+}
+var functionMowSearchFlightSetText = function(depCity, arrCity, daysToAdd) {
 	var changeEvent = document.createEvent("HTMLEvents");
 	changeEvent.initEvent("change", true, true);
 	
