@@ -3,11 +3,9 @@ var showDesktopControls = function(url) {
 		return;
 
 	$('#noActionsMessage').hide();
-
-	runOnDOMWithCallback(functionGetEnvironment, functionSetEnvironment);
-
 	$('.desktopControls').show();
-
+	
+	runOnDOMWithCallback(functionGetEnvironment, functionSetEnvironment);
 	addDesktopActions();
 }
 
@@ -29,6 +27,7 @@ var addDesktopActions = function() {
 	 }, false);
 	document.getElementById('loadarranger').addEventListener('click', function () { runOnDOM(functionLoadArranger) }, false);
 	document.getElementById('manageGroupReservation').addEventListener('click', function () { runOnDOM(functionGroupReservation); window.close(); }, false);
+	document.getElementById('toggles').addEventListener('click', function () { runOnDOM(functionToggles); window.close(); }, false);
 }
 
 
@@ -156,4 +155,10 @@ var functionLoadArranger = function () {
 // Open Group reservation page
 var functionGroupReservation = function() {
 	location.href = "/booking/reservation-lookup/group";
+}
+
+
+// Open Toggles page
+var functionToggles = function() {
+	location.href = "/toggle";
 }
