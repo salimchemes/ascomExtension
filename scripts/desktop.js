@@ -160,5 +160,6 @@ var functionGroupReservation = function() {
 
 // Open Toggles page
 var functionToggles = function() {
-	location.href = "/toggle";
+	var win = window.open('/toggle', '_blank');
+	win.focus();
 }
