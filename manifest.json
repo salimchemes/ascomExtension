@@ -25,7 +25,8 @@
     "*://localhost/*"
   ],
   "web_accessible_resources": [
-    "logo.png"
+    "logo.png",
+    "settings.png"
   ],
   "content_scripts": [
     {
@@ -41,14 +42,10 @@
       ],
       "js": [
         "thirdParty/jquery-3.2.1.min.js",
-        "thirdParty/bootstrap-3.3.7-dist/js/bootstrap.min.js",
         "scripts/popup.js",
         "scripts/desktop.js",
         "scripts/mobile.js",
         "scripts/settings.js"
-      ],
-      "css": [
-        "thirdParty/bootstrap-3.3.7-dist/css/bootstrap.min.css"
       ]
     }
   ]
