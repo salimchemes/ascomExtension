@@ -26,6 +26,10 @@ var addDesktopActions = function() {
 		runOnDOM(functionLoadPayment, [getSettingValue('creditCard')]);
 	 }, false);
 	document.getElementById('loadarranger').addEventListener('click', function () { runOnDOM(functionLoadArranger) }, false);
+	document.getElementById('signin').addEventListener('click', function () { 
+		runOnDOM(functionSignIn, [getSettingValue('signInUserName'), getSettingValue('signInUserPassword')]);
+		window.close();
+	 }, false);
 	document.getElementById('manageGroupReservation').addEventListener('click', function () { runOnDOM(functionGroupReservation); window.close(); }, false);
 	document.getElementById('toggles').addEventListener('click', function () { runOnDOM(functionToggles); window.close(); }, false);
 }
@@ -149,6 +153,15 @@ var functionLoadArranger = function () {
 	document.getElementById("ArrangerName").value = "tester";
 	document.getElementById("EmailSubscription_AgreeToEmailSubscription").checked = false;
 	window.scrollTo(0, document.body.scrollHeight);
+}
+
+
+// Sign in
+var functionSignIn = function (userName, password) {
+	document.getElementById("navbar-greeting-link").click();
+	document.getElementById("sign-in-username").value = userName;
+	document.getElementById("sign-in-password").value = password;
+	document.getElementById("sign-in-btn").click();
 }
 
 
