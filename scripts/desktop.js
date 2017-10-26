@@ -9,29 +9,66 @@ var showDesktopControls = function(url) {
 	addDesktopActions();
 }
 
-
 var addDesktopActions = function() {
-	document.getElementById('managetrip').addEventListener('click', function () { runOnDOM(functionManageTrip); window.close(); }, false);
-	document.getElementById('selectfirstflight').addEventListener('click', function () {
-		runOnDOM(functionSearchFlight, [getSettingValue('depCity'), getSettingValue('arrCity'), getSettingValue('daysToAdd')]);
-		setTimeout(function() { runOnDOM(functionSelectFirstFlight) }, 5000);
-	}, false);
-	document.getElementById('loadsingle').addEventListener('click', function () { 
-		runOnDOM(functionLoadPax, [getSettingValue('paxFirstName'), getSettingValue('paxEmail')]); 
-	}, false);
-	document.getElementById('loadmultiple').addEventListener('click', function () { 
-		runOnDOM(functionLoadMultiPax, [getSettingValue('paxFirstName'), getSettingValue('paxEmail')]);
-	}, false);
-	document.getElementById('loadpayment').addEventListener('click', function () { 
-		runOnDOM(functionLoadPayment, [getSettingValue('creditCard')]);
-	 }, false);
-	document.getElementById('loadarranger').addEventListener('click', function () { runOnDOM(functionLoadArranger) }, false);
-	document.getElementById('signin').addEventListener('click', function () { 
-		runOnDOM(functionSignIn, [getSettingValue('signInUserName'), getSettingValue('signInUserPassword')]);
-		window.close();
-	 }, false);
+	document.body.addEventListener("keydown", handleKeyDown, false);
+
+	document.getElementById('managetrip').addEventListener('click', executeManageTrip, false);
+	document.getElementById('selectfirstflight').addEventListener('click', executeSelectFirstFlight, false);
+	document.getElementById('loadsingle').addEventListener('click', executeLoadPax, false);
+	document.getElementById('loadmultiple').addEventListener('click', executeLoadMultiPax, false);
+	document.getElementById('loadpayment').addEventListener('click', executeLoadPayment, false);
+	document.getElementById('loadarranger').addEventListener('click', executeLoadArranger, false);
+	document.getElementById('signin').addEventListener('click', executeSignIn, false);
 	document.getElementById('manageGroupReservation').addEventListener('click', function () { runOnDOM(functionGroupReservation); window.close(); }, false);
 	document.getElementById('toggles').addEventListener('click', function () { runOnDOM(functionToggles); window.close(); }, false);
+}
+
+var handleKeyDown = function(e) {
+	switch (e.keyCode) {
+		case 49: case 97: executeManageTrip(); break; // #1
+		case 50: case 98: executeSelectFirstFlight(); break; // #2
+		case 51: case 99: executeLoadPax(); break; // #3
+		case 52: case 100: executeLoadMultiPax(); break; // #4
+		case 53: case 101: executeLoadPayment(); break; // #5
+		case 54: case 102: executeLoadArranger(); break; // #6
+		case 55: case 103: executeSignIn(); break; // #7
+		default: break;
+	}
+}
+
+var executeManageTrip = function () {
+	runOnDOM(functionManageTrip);
+	window.close();
+}
+
+var executeSelectFirstFlight = function () {
+	runOnDOM(functionSearchFlight, [getSettingValue('depCity'), getSettingValue('arrCity'), getSettingValue('daysToAdd')]);
+	setTimeout(function() { runOnDOM(functionSelectFirstFlight) }, 5000);
+}
+
+var executeLoadPax = function () {
+	runOnDOM(functionLoadPax, [getSettingValue('paxFirstName'), getSettingValue('paxEmail')]);
+	window.close();
+}
+
+var executeLoadMultiPax = function () {
+	runOnDOM(functionLoadMultiPax, [getSettingValue('paxFirstName'), getSettingValue('paxEmail')]);
+	window.close();
+}
+
+var executeLoadPayment = function () {
+	runOnDOM(functionLoadPayment, [getSettingValue('creditCard')]);
+	window.close();
+}
+
+var executeLoadArranger = function () {
+	runOnDOM(functionLoadArranger)
+	window.close();
+}
+
+var executeSignIn = function () {
+	runOnDOM(functionSignIn, [getSettingValue('signInUserName'), getSettingValue('signInUserPassword')]);
+	window.close();
 }
 
 

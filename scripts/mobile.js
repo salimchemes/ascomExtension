@@ -11,27 +11,50 @@ var showMowControls = function(url) {
 	addMowActions();
 }
 
-
 var addMowActions = function() {
-	document.getElementById('mowloadpax').addEventListener('click', function () { 
-		runOnDOM(functionMowLoadPax, [getSettingValue('paxFirstName')]);
-	 }, false);
-	document.getElementById('mowloadcontactinfo').addEventListener('click', function () { 
-		runOnDOM(functionMowLoadContactInfo, [getSettingValue('paxEmail')]);
-	 }, false);
-	document.getElementById('mowloadpayment').addEventListener('click', function () { 
-		runOnDOM(functionMowLoadPayment, [getSettingValue('creditCard')]);
-	}, false);
-	document.getElementById('mowmanagetrip').addEventListener('click', function () { 
-		runOnDOM(functionMowManageTrip);
-		setTimeout(function() { runOnDOM(functionMowManageTripSetText); window.close(); }, 1000);
-	}, false);
-	document.getElementById('mowsearchflight').addEventListener('click', function () {
-		runOnDOM(functionMowSearchFlight);
-		setTimeout(function() { 
-			runOnDOM(functionMowSearchFlightSetText, [getSettingValue('depCity'), getSettingValue('arrCity'), getSettingValue('daysToAdd')]); 
-			window.close(); }, 1000);
-	}, false);
+	document.body.addEventListener("keydown", handleMowKeyDown, false);
+
+	document.getElementById('mowloadpax').addEventListener('click', executeMowLoadPax, false);
+	document.getElementById('mowloadcontactinfo').addEventListener('click', executeMowLoadContactInfo, false);
+	document.getElementById('mowloadpayment').addEventListener('click', executeMowLoadPayment, false);
+	document.getElementById('mowmanagetrip').addEventListener('click', executeMowManageTrip, false);
+	document.getElementById('mowsearchflight').addEventListener('click', executeMowSearchFlight, false);
+}
+
+var handleMowKeyDown = function(e) {
+	switch (e.keyCode) {
+		case 49: case 97: executeMowManageTrip(); break; // #1
+		case 50: case 98: executeMowSearchFlight(); break; // #2
+		case 51: case 99: executeMowLoadPax(); break; // #3
+		case 52: case 100: executeMowLoadContactInfo(); break; // #4
+		case 53: case 101: executeMowLoadPayment(); break; // #5
+		default: break;
+	}
+}
+
+var executeMowLoadPax = function () {
+	runOnDOM(functionMowLoadPax, [getSettingValue('paxFirstName')]);
+	window.close();
+}
+
+var executeMowLoadContactInfo = function () {
+	runOnDOM(functionMowLoadContactInfo, [getSettingValue('paxEmail')]);
+	window.close();
+}
+
+var executeMowLoadPayment = function () {
+	runOnDOM(functionMowLoadPayment, [getSettingValue('creditCard')]);
+	window.close();
+}
+
+var executeMowManageTrip = function () {
+	runOnDOM(functionMowManageTrip);
+	setTimeout(function() { runOnDOM(functionMowManageTripSetText); window.close(); }, 1500);
+}
+
+var executeMowSearchFlight = function () {
+	runOnDOM(functionMowSearchFlight);
+	setTimeout(function() { runOnDOM(functionMowSearchFlightSetText, [getSettingValue('depCity'), getSettingValue('arrCity'), getSettingValue('daysToAdd')]); window.close(); }, 1500);
 }
 
 
