@@ -13,11 +13,10 @@ var addDesktopActions = function() {
 	document.body.addEventListener("keydown", handleKeyDown, false);
 
 	document.getElementById('managetrip').addEventListener('click', executeManageTrip, false);
-	document.getElementById('selectfirstflight').addEventListener('click', executeSelectFirstFlight, false);
+	document.getElementById('selectfirstflight').addEventListener('click', executeSearchFlight, false);
 	document.getElementById('loadsingle').addEventListener('click', executeLoadPax, false);
 	document.getElementById('loadmultiple').addEventListener('click', executeLoadMultiPax, false);
 	document.getElementById('loadpayment').addEventListener('click', executeLoadPayment, false);
-	document.getElementById('loadarranger').addEventListener('click', executeLoadArranger, false);
 	document.getElementById('signin').addEventListener('click', executeSignIn, false);
 	document.getElementById('manageGroupReservation').addEventListener('click', function () { runOnDOM(functionGroupReservation); window.close(); }, false);
 	document.getElementById('toggles').addEventListener('click', function () { runOnDOM(functionToggles); window.close(); }, false);
@@ -26,12 +25,11 @@ var addDesktopActions = function() {
 var handleKeyDown = function(e) {
 	switch (e.keyCode) {
 		case 49: case 97: executeManageTrip(); break; // #1
-		case 50: case 98: executeSelectFirstFlight(); break; // #2
+		case 50: case 98: executeSearchFlight(); break; // #2
 		case 51: case 99: executeLoadPax(); break; // #3
 		case 52: case 100: executeLoadMultiPax(); break; // #4
 		case 53: case 101: executeLoadPayment(); break; // #5
-		case 54: case 102: executeLoadArranger(); break; // #6
-		case 55: case 103: executeSignIn(); break; // #7
+		case 54: case 102: executeSignIn(); break; // #6
 		default: break;
 	}
 }
@@ -41,9 +39,9 @@ var executeManageTrip = function () {
 	window.close();
 }
 
-var executeSelectFirstFlight = function () {
+var executeSearchFlight = function () {
 	runOnDOM(functionSearchFlight, [getSettingValue('depCity'), getSettingValue('arrCity'), getSettingValue('daysToAdd')]);
-	setTimeout(function() { runOnDOM(functionSelectFirstFlight) }, 5000);
+	window.close();
 }
 
 var executeLoadPax = function () {
@@ -58,11 +56,6 @@ var executeLoadMultiPax = function () {
 
 var executeLoadPayment = function () {
 	runOnDOM(functionLoadPayment, [getSettingValue('creditCard')]);
-	window.close();
-}
-
-var executeLoadArranger = function () {
-	runOnDOM(functionLoadArranger)
 	window.close();
 }
 
@@ -100,7 +93,7 @@ var functionManageTrip = function () {
 }
 
 
-// Search and select first flight
+// Search flight
 var functionSearchFlight = function(depCity, arrCity, daysToAdd) {
 	var changeEvent = document.createEvent("HTMLEvents");
 	changeEvent.initEvent("change", true, true);
@@ -117,11 +110,6 @@ var functionSearchFlight = function(depCity, arrCity, daysToAdd) {
 	document.getElementById('departureDate1').value = depDateString;
 	document.getElementById('departureDate1').dispatchEvent(changeEvent);
 	document.getElementById('findFlights').click();
-}
-var functionSelectFirstFlight = function () {
-	$('a.refundable-toggle').click();
-	$('div.PriceCell:first').click();
-	$('#ContinueButton').click();
 }
 
 
@@ -182,14 +170,6 @@ var functionLoadPayment = function (cardNumber) {
 	document.getElementById("CreditCardInformation_BillingAddressEntry_USStates_Selected").value = "WA";
 	document.getElementById("CreditCardInformation_BillingPhoneNumberEntry_Number").value = "1234567890";
 	window.scrollTo(0, document.body.scrollHeight)
-}
-
-
-// Load arranger
-var functionLoadArranger = function () {
-	document.getElementById("ArrangerName").value = "tester";
-	document.getElementById("EmailSubscription_AgreeToEmailSubscription").checked = false;
-	window.scrollTo(0, document.body.scrollHeight);
 }
 
 
