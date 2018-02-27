@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "ASCOM Dev Extension",
-  "description": "Chrome Extension to Alaska developers",
+  "description": "Chrome Extension for Alaska developers",
   "version": "1.0",
   "options_ui": {
     "page": "settings.html",
@@ -26,7 +26,8 @@
   ],
   "web_accessible_resources": [
     "logo.png",
-    "settings.png"
+    "settings.png",
+    "help.png"
   ],
   "content_scripts": [
     {

@@ -1,0 +1,5 @@
+How to install:
+1- Open a new tab in Chrome and go to chrome://extensions/
+2- Click on the 'Load unpacked extension...' button and search for the ascomExtension folder from the zip file.
+3- Select the ascomExtension folder and click OK.
+4- Done! You should see the ASCOM Dev Extension in the extensions list.
